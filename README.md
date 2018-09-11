@@ -2,7 +2,6 @@
 
 복잡한것이 싫을 때 쓰기 좋은 mysql 연결 풀. 
 
-오래 전 델파이로 작성했던 코드를 C++로 변경. 
 
 
 테스트 빌드. (우분투 16.04-x86_64) 
@@ -10,7 +9,7 @@
 $ g++ -Wall -std=c++11 -I/usr/include/mysql -I. test.cpp mysqlconn.cpp -L/usr/lib/x86_64-linux-gnu -lmysqlclient -lz
 ```
 
-`test.cpp` 내의 HOST, USER, PASSWD, DATABASE, PORT 를 자신의 환경에 맞출 것. 
+`test.cpp` 내의 `HOST`, `USER`, `PASSWD`, `DATABASE`, `PORT` 를 자신의 환경에 맞출 것. 
 
 
 기능
