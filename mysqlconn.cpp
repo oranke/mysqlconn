@@ -236,8 +236,8 @@ bool MysqlConnection::execute(const string query, const bool multiline, my_ulong
 }
 
 
-int MysqlConnection::ping() const {
-    return _conn && mysql_ping(_conn);
+bool MysqlConnection::ping() const {
+    return _conn && (mysql_ping(_conn) == 0);
 } 
 
 my_ulonglong MysqlConnection::affectrows() const {
@@ -370,7 +370,7 @@ shared_ptr<MysqlConnection> MysqlConnPool::lockConnection() {
         retConn->lock(); 
     }
 
-    if ( !retConn->is_connected()  || retConn->ping() != 0)  
+    if ( !retConn->is_connected()  || !retConn->ping())  
         retConn->connect(_host, _user, _passwd, _database, _port);
 
 

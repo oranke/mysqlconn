@@ -82,7 +82,7 @@ public:
     bool exec(const string query, const bool multiline = false, my_ulonglong* affectRowsPtr = nullptr) const;
     bool execute(const string query, const bool multiline = false, my_ulonglong* affectRowsPtr = nullptr) const;
 
-    int ping() const; 
+    bool ping() const; 
     my_ulonglong affectrows() const; 
     const char * lastError() const; 
     long long lastInsertID() const; 
