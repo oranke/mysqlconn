@@ -351,7 +351,8 @@ const bool MysqlConnPool::checkConnection() const {
 }
 
 shared_ptr<MysqlConnection> MysqlConnPool::lockConnection() {
-    if (_connList.size() == 0) return nullptr; 
+    //if (_connList.size() == 0) return nullptr; 
+    assert(_connList.size() > 0);
 
     shared_ptr<MysqlConnection> retConn = nullptr; 
 
@@ -364,8 +365,9 @@ shared_ptr<MysqlConnection> MysqlConnPool::lockConnection() {
 
     if (!retConn) {
         lock(); 
-        retConn = _connList[_connIndex % _connList.size()];
+        retConn = _connList[_connIndex];
         _connIndex++; 
+        if (_connIndex >= _connList.size()) _connIndex =0; 
         unlock(); 
 
         retConn->lock(); 
@@ -374,10 +376,10 @@ shared_ptr<MysqlConnection> MysqlConnPool::lockConnection() {
     if ( !retConn->is_connected()  || !retConn->ping())  
         retConn->connect(_host, _user, _passwd, _database, _port);
 
+    while ( !retConn->is_connected()  || !retConn->ping() ) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-    if (!retConn->is_connected()) {
-        retConn->unlock(); 
-        return nullptr; 
+        retConn->connect(_host, _user, _passwd, _database, _port);
     }
 
     return retConn; 

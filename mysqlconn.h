@@ -1,12 +1,13 @@
 #pragma once
 
 //#include <cstdlib>
+#include <cassert>
 #include <vector>
 #include <iostream>
 #include <string>
 #include <memory>
 #include <mutex>
-
+#include <thread>
 #include <mysql.h>
 
 using std::string; 
