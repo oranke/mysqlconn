@@ -298,7 +298,8 @@ string MysqlConnection::escapeString(const string input) const {
 }
 
 unsigned long MysqlConnection::escapeString( char *to, const char *from, unsigned long length) const {
-    return mysql_real_escape_string(_conn, to, from, length);
+    //return mysql_real_escape_string(_conn, to, from, length);
+    return mysql_real_escape_string_quote(_conn, to, from, length, '\'');
 }
 
 
